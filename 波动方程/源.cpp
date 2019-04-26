@@ -6,10 +6,10 @@
 
 typedef double _Data;
 
-constexpr int xN = 1000;
+constexpr long long xN = 1000;
 constexpr double xstep = 1.0 / xN;
-constexpr int tN = 1000;
-constexpr int tcount = 10000;
+constexpr long long tN = 1000;
+constexpr long long tcount = 10000;
 constexpr double tstep = 1.0 / xN;
 constexpr double pi = 3.141592653589793;
 
@@ -25,14 +25,14 @@ std::array<_Data, n> solve_catch(const std::array<_Data, n - 1> & _d, const std:
 	auto& u = *pu; u = _u;
 	auto& b = *pb; b = _b;
 	std::array<_Data, n> x;
-	for (int i = 1; i < n; i++)
+	for (long long i = 1; i < n; i++)
 	{
 		d[i - 1] /= c[i - 1];
 		c[i] -= u[i - 1] * d[i - 1];
 		b[i] -= b[i - 1] * d[i - 1];
 	}
 	x[n - 1] = b[n - 1] / c[n - 1];
-for (int i = n - 2; i >= 0; i--)
+for (long long i = n - 2; i >= 0; i--)
 {
 	x[i] = (b[i] - u[i] * x[i + 1]) / c[i];
 }
@@ -65,21 +65,21 @@ int main1([[maybe_unused]] int argc = 1, [[maybe_unused]] char* argv[] = nullptr
 	}
 	for (int i = 0; i < tcount; i++)
 	{
-		for (int j = xN / J; j <= xN - xN / J; j += xN / J)
+		for (long long j = xN / J; j <= xN - xN / J; j += xN / J)
 		{
 			double RHS = (last[j - k] - 2 * last[j] + last[j + k]) / (k * h * k * h);
 			current[j] = last[j] + tstep * RHS;
 		}
 		current[0] = current[xN] = 0;
-		for (int j = 0; j < J; j++)
+		for (long long j = 0; j < J; j++)
 		{
 			std::array<double, xN / J - 1> right;
-			for (int l = 1; l <= xN / J - 1; l++)
+			for (long long l = 1; l <= xN / J - 1; l++)
 				right[l - 1] = M * last[xN / J * j + l];
 			right[0] -= current[j * xN / J];
 			right[xN / J - 2] -= current[(j + 1) * xN / J];
 			auto cur = solve_catch<xN / J - 1>(d, c, u, right);
-			for (int l = 1; l <= xN / J - 1; l++)
+			for (long long l = 1; l <= xN / J - 1; l++)
 				current[xN / J * j + l] = cur[l - 1];
 		}
 		if (0 == i % 200)
@@ -131,11 +131,11 @@ int main2([[maybe_unused]] int argc = 1, [[maybe_unused]] char* argv[] = nullptr
 		current[0] = current[xN] = 0;
 		std::unique_ptr<std::array<double, xN - 1>> pright(new std::array<double, xN - 1>);
 		auto & right = *pright;
-		for (int l = 1; l <= xN - 1; l++)
-			right[l - 1] = M * last[l];
+		for (long long l = 1; l <= xN - 1; l++)
+			right[l - 1LL] = M * last[l];
 		auto cur = solve_catch<xN - 1>(d, c, u, right);
-		for (int l = 1; l <= xN - 1; l++)
-			current[l] = cur[l - 1];
+		for (long long l = 1; l <= xN - 1; l++)
+			current[l] = cur[l - 1LL];
 
 		if (0 == i % 200)
 		{

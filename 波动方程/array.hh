@@ -229,26 +229,3 @@ std::array<_Data, n> solve_catch(const std::array<_Data, n - 1>& _d, const std::
 	delete pb, pc, pu, pd;
     return x;
 }
-
-/*
-d=[A(1,1),A(2,2),...,A(n,n)];
-u=[A(1,2),A(2,3),...,A(n-1,n)];
-l=[A(2,1),A(3,2),...,A(n,n-1)];
-% 追
-for i = 2 to n
-    l(i-1) = l(i-1)/d(i-1);
-    d(i,i) = d(i,i) - u(i-1) * l(i-1);
-    b(i) = b(i) - b(i-1) * l(i-1);
-end
-% 赶
-x(n) = b(n) / d(i);
-for i = n-1 to 1
-    x(i) = (b(i) - u(i) * x(i+1)) / d(i);
-end
----------------------
-作者：倾绝
-来源：CSDN
-原文：https://blog.csdn.net/u010450214/article/details/50170623
-版权声明：本文为博主原创文章，转载请附上博文链接！
-*/
-}
